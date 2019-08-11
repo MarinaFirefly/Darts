@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Darts</title>
+</head>
+
+<body>
+    <script src="birds.js"></script>
+    <script>
+        //<audio src="Sound_main.mp3" autoplay="autoplay" controls="controls"type="audio/mpeg" preload="auto"></audio>
+        var audioMain = document.createElement("audio")
+        audioMain.autostart = true
+        audioMain.controls = true
+        audioMain.loop = true
+        audioMain.preload = "auto"
+        audioMain.src = "Sound_main.mp3"
+        document.body.appendChild(audioMain)
+
+        document.body.style.backgroundImage = "url(https://picsum.photos/id/307/1400/800)"
+        var div4 = document.createElement("div")
+        div4.style.width = "320px"
+        div4.style.height = "320px"
+        div4.style.background = "green"
+        div4.style.position = "absolute"
+        div4.style.borderRadius = "50%"
+        div4.style.top = "calc(50% - 160px)"
+        div4.style.left = "calc(50% - 160px)"
+        document.body.appendChild(div4)
+        div4.id = "div4"
+
+        var div3 = document.createElement("div")
+        div3.style.width = "160px"
+        div3.style.height = "160px"
+        div3.style.background = "yellow"
+        div3.style.position = "absolute"
+        div3.style.borderRadius = "50%"
+        div3.style.top = "calc(50% - 80px)"
+        div3.style.left = "calc(50% - 80px)"
+        document.body.appendChild(div3)
+        div3.id = "div3"
+
+        var div2 = document.createElement("div")
+        div2.style.width = "80px"
+        div2.style.height = "80px"
+        div2.style.background = "blue"
+        div2.style.position = "absolute"
+        div2.style.borderRadius = "50%"
+        div2.style.top = "calc(50% - 40px)"
+        div2.style.left = "calc(50% - 40px)"
+        document.body.appendChild(div2)
+        div2.id = "div2"
+
+        var div1 = document.createElement("div")
+        div1.style.width = "40px"
+        div1.style.height = "40px"
+        div1.style.background = "red"
+        div1.style.position = "absolute"
+        div1.style.borderRadius = "50%"
+        div1.style.top = "calc(50% - 20px)"
+        div1.style.left = "calc(50% - 20px)"
+        document.body.appendChild(div1)
+        div1.id = "div1"
+
+        var img1 = document.createElement("img")
+        img1.src = "arrow.png"
+        img1.style.width = "80px"
+        img1.style.position = "absolute"
+        img1.style.top = "0"
+        document.body.appendChild(img1)
+
+        var img2 = document.createElement("img")
+        img2.src = "http://hddfhm.com/images/animated-clipart-darts-9.gif"
+        img2.style.width = "150px"
+        img2.style.position = "absolute"
+        img2.style.top = "0"
+
+        document.onmousemove = function (event) {
+            img1.style.top = `${event.clientY - 60}px`
+            img1.style.left = `${event.clientX + 15}px`
+        }
+
+        function changeArrow() {
+
+            img1.remove()
+            document.onmousemove = function (event) {
+                img2.style.top = `${event.clientY - 50}px`
+                img2.style.left = `${event.clientX}px`
+            }
+            document.body.appendChild(img2)
+
+
+            setTimeout(function () {
+                img2.remove()
+                document.onmousemove = function (event) {
+                    img1.style.top = `${event.clientY - 50}px`
+                    img1.style.left = `${event.clientX}px`
+                }
+                document.body.appendChild(img1)
+            },
+                800)
+        }
+
+        var sum = 0
+        var sound1 = document.createElement("audio")
+        sound1.src = "1.mp3"
+        sound1.id = "sound1"
+        document.body.appendChild(sound1)
+        var sound2 = document.createElement("audio")
+        sound2.src = "2.mp3"
+        sound2.id = "sound2"
+        document.body.appendChild(sound2)
+        var sound3 = document.createElement("audio")
+        sound3.src = "3.mp3"
+        sound3.id = "sound3"
+        document.body.appendChild(sound3)
+
+        document.onclick = function (event) {
+            var h = window.innerHeight / 2
+            var w = window.innerWidth / 2
+            setTimeout(function () {
+                function Sum() {
+
+                    if (Math.pow((event.clientX - w), 2) + Math.pow((event.clientY - h), 2) <= 400) {
+                        var a = 10
+                        changeArrow()
+                        document.getElementById('sound1').play()
+                    }
+                    if (Math.pow((event.clientX - w), 2) + Math.pow((event.clientY - h), 2) > 400 &&
+                        Math.pow((event.clientX - w), 2) + Math.pow((event.clientY - h), 2) <= 1600) {
+                        var a = 8
+                        changeArrow()
+                        document.getElementById('sound2').play()
+                    }
+                    if (Math.pow((event.clientX - w), 2) + Math.pow((event.clientY - h), 2) > 1600 &&
+                        Math.pow((event.clientX - w), 2) + Math.pow((event.clientY - h), 2) <= 6400) {
+                        var a = 5
+                        changeArrow()
+                        document.getElementById('sound3').play()
+                    }
+                    if (Math.pow((event.clientX - w), 2) + Math.pow((event.clientY - h), 2) > 6400 &&
+                        Math.pow((event.clientX - w), 2) + Math.pow((event.clientY - h), 2) <= 25600) {
+                        var a = 2
+                        changeArrow()
+                        document.getElementById('sound2').play()
+                    }
+                    if (Math.pow((event.clientX - w), 2) + Math.pow((event.clientY - h), 2) > 25600) {
+                        var a = 0
+                    }
+                    return a
+                }
+                sum += Sum()
+                console.log(sum)
+                return sum
+            }, 800)
+
+        }
+
+        setInterval(function () {
+            alert("Сумма очков " + sum)
+            sum = 0
+        }, 30000)
+
+    </script>
+
+</body>
+
+</html>
